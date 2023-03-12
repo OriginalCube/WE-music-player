@@ -58,7 +58,15 @@ const MusicPlayer = (props) => {
     props.onSkip();
   };
 
-  const onPlay = () => {};
+  const onPlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+      setPlaying(false);
+    } else {
+      audioRef.current.play();
+      setPlaying(true);
+    }
+  };
 
   const lessVolume = () => {
     if (volume - 0.1 > 0) {

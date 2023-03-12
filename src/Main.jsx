@@ -3,6 +3,7 @@ import Background from "./components/Background";
 import Navigation from "./components/Navigation";
 import MainData from "./Data.json"; //Temporary data for new install
 import MusicPlayer from "./components/MusicPlayer";
+import RegisterSong from "./components/RegisterSong";
 
 const Main = () => {
   const [background, setBackground] = React.useState(false);
@@ -35,6 +36,24 @@ const Main = () => {
     }
   };
 
+  const addSong = (e) => {
+    const song = {
+      id: bone["songs"].length,
+      default: false,
+      type: e.type,
+      imageType: e.imageType,
+      name: e.name,
+      background: e.background,
+      foreground: e.foreground,
+      category: e.category,
+    };
+    const tempArray = bone["songs"];
+    tempArray.push(song);
+    bone["songs"] = tempArray;
+    localStorage.setItem("music-player-03", JSON.stringify(bone));
+    // localStorage.setItem("music-player-");
+  };
+
   React.useEffect(() => {
     //set Local Storage
     if (localStorage.getItem("music-player-03")) {
@@ -56,6 +75,12 @@ const Main = () => {
       <Background
         node={bone ? bone["songs"][mainIndex] : "./assets/images/That Band.jpg"}
         mode={background}
+      />
+      <RegisterSong
+        addSong={addSong}
+        bone={bone}
+        mainIndex={mainIndex}
+        node={bone ? bone["songs"][mainIndex] : MainData["songs"][0]}
       />
       <Navigation />
       <MusicPlayer

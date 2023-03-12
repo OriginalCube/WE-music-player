@@ -7,9 +7,7 @@ const Background = (props) => {
         <img
           className="background-large"
           src={
-            props.node.default
-              ? "./assets/images/" + props.node.name + ".jpg"
-              : "file:///" + props.node.name
+            "./assets/images/" + props.node.name + "." + props.node.imageType
           }
           alt=""
         />
@@ -17,9 +15,7 @@ const Background = (props) => {
         <img
           className="background-small"
           src={
-            props.node.default
-              ? "./assets/images/" + props.node.name + ".jpg"
-              : "file:///" + props.node.name
+            "./assets/images/" + props.node.name + "." + props.node.imageType
           }
           alt=""
         />

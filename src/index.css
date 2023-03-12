@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 * {
+  color: white;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -104,4 +105,31 @@
   width: 3vh;
   height: 3vh;
   margin-left: 6%;
+}
+
+.register {
+  position: absolute;
+  top: 27.5%;
+  left: 5%;
+  width: 20%;
+  height: 45%;
+}
+
+input {
+  color: black;
+}
+
+.register-container {
+  width: 85%;
+  margin: auto;
+}
+
+input[type="text"],
+input[type="text"]:focus {
+  width: 100%;
+  outline: none;
+  text-decoration: none;
+}
+
+.submit-button {
 }
