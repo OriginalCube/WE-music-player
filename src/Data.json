@@ -1,0 +1,31 @@
+{
+  "songs": [
+    {
+      "id": 0,
+      "default": true,
+      "type": "flac",
+      "name": "Guitar, Loneliness and Blue Planet",
+      "background": "#4C2633",
+      "foreground": "#ED709A",
+      "category": "Anime"
+    },
+    {
+      "id": 1,
+      "default": true,
+      "type": "flac",
+      "name": "That Band",
+      "background": "#0C3958",
+      "foreground": "#4C2633",
+      "category": "Anime"
+    },
+    {
+      "id": 2,
+      "default": true,
+      "type": "flac",
+      "name": "If I could be a constellation",
+      "background": "#580D24",
+      "foreground": "#E81A5B",
+      "category": "Anime"
+    }
+  ]
+}
