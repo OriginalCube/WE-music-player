@@ -1,6 +1,6 @@
 import React from "react";
 
-const Navigation = () => {
+const Navigation = (props) => {
   const [setting, setSetting] = React.useState(true);
   let audioPlayer = new Audio();
 
@@ -15,14 +15,17 @@ const Navigation = () => {
   };
 
   const onClock = () => {
+    props.onClock();
     onSound(1);
   };
 
   const onVisualizer = () => {
+    props.onVisualizer();
     onSound(1);
   };
 
   const onPlayer = () => {
+    props.onPlayer();
     onSound(1);
   };
 

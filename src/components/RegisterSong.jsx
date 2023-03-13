@@ -54,7 +54,7 @@ const RegisterSong = (props) => {
       id: 6,
       name: "category",
       type: "text",
-      label: "category",
+      label: "Category",
       required: true,
     },
   ];
@@ -75,7 +75,13 @@ const RegisterSong = (props) => {
     >
       <div className="register-container">
         <form onSubmit={handleSubmit}>
-          <p style={{ textAlign: "center", marginTop: "2%" }}>
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "2%",
+              borderBottom: `2px solid ${props.node.foreground}`,
+            }}
+          >
             You Need to enable CEF devtools port to input texts.
           </p>
           {check.map((e) => (

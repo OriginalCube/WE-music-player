@@ -4,6 +4,9 @@ import Navigation from "./components/Navigation";
 import MainData from "./Data.json"; //Temporary data for new install
 import MusicPlayer from "./components/MusicPlayer";
 import RegisterSong from "./components/RegisterSong";
+import AudioVisualizer from "./components/AudioVisualizer";
+import Clock from "./components/Clock";
+import Playlist from "./components/Playlist";
 
 const Main = () => {
   const [background, setBackground] = React.useState(false);
@@ -11,9 +14,24 @@ const Main = () => {
   const [bone, setBone] = React.useState();
   const [bgColor, setBgColor] = React.useState("red");
   const [shuffle, setShuffle] = React.useState(false);
+  const [clock, setClock] = React.useState(true);
+  const [visualizer, setVisualizer] = React.useState(true);
+  const [player, setPlayer] = React.useState(true);
 
   const onBackground = () => {
     setBackground(!background);
+  };
+
+  const onClock = () => {
+    setClock(!clock);
+  };
+
+  const onVisualizer = () => {
+    setVisualizer(!visualizer);
+  };
+
+  const onPlayer = () => {
+    setPlayer(!player);
   };
 
   const onSkip = () => {
@@ -36,6 +54,10 @@ const Main = () => {
     }
   };
 
+  const changeSong = (e) => {
+    setMainIndex(e);
+  };
+
   const addSong = (e) => {
     const song = {
       id: bone["songs"].length,
@@ -50,6 +72,7 @@ const Main = () => {
     const tempArray = bone["songs"];
     tempArray.push(song);
     bone["songs"] = tempArray;
+    setBone([...bone]);
     localStorage.setItem("music-player-03", JSON.stringify(bone));
     // localStorage.setItem("music-player-");
   };
@@ -63,31 +86,56 @@ const Main = () => {
     }
   }, []);
 
-  React.useEffect(() => {}, [bone]);
-
   return (
     <div
       className="Main"
       style={{
-        backgroundColor: bone ? bone["songs"][mainIndex].background : "black",
+        backgroundColor: bone
+          ? bone["songs"][mainIndex].background
+          : MainData["songs"][0].background,
       }}
     >
       <Background
         node={bone ? bone["songs"][mainIndex] : "./assets/images/That Band.jpg"}
         mode={background}
       />
+      {visualizer ? (
+        <AudioVisualizer
+          lineColor={
+            bone
+              ? bone["songs"][mainIndex].foreground
+              : MainData["songs"][0].foreground
+          }
+        />
+      ) : null}
+      {clock ? <Clock /> : null}
       <RegisterSong
         addSong={addSong}
         bone={bone}
         mainIndex={mainIndex}
         node={bone ? bone["songs"][mainIndex] : MainData["songs"][0]}
       />
-      <Navigation />
-      <MusicPlayer
-        onSkip={onSkip}
-        onPrev={onPrev}
-        node={bone ? bone["songs"][mainIndex] : MainData["songs"][0]}
+      <Navigation
+        onPlayer={onPlayer}
+        onClock={onClock}
+        onVisualizer={onVisualizer}
       />
+      <Playlist
+        changeSong={changeSong}
+        color={
+          bone
+            ? bone["songs"][mainIndex].foreground
+            : MainData["songs"][0].foreground
+        }
+        bone={bone ? bone["songs"] : MainData["songs"]}
+      />
+      {player ? (
+        <MusicPlayer
+          onSkip={onSkip}
+          onPrev={onPrev}
+          node={bone ? bone["songs"][mainIndex] : MainData["songs"][0]}
+        />
+      ) : null}
     </div>
   );
 };
