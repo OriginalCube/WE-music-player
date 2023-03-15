@@ -3,6 +3,11 @@ import PlaylistItem from "./PlaylistItem";
 
 const Playlist = (props) => {
   const [bone, setBone] = React.useState([]);
+
+  const removeSong = () => {
+    props.removeSong(props.mainIndex);
+  };
+
   React.useEffect(() => {
     setBone(props.bone);
   }, [props.bone]);
@@ -36,6 +41,7 @@ const Playlist = (props) => {
       </div>
       <div>
         <p
+          onClick={removeSong}
           className="playlist-footer"
           style={{ borderTop: `3px solid ${props.color}` }}
         >

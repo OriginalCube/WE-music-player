@@ -10,8 +10,8 @@ import Playlist from "./components/Playlist";
 
 const Main = () => {
   const [background, setBackground] = React.useState(false);
-  const [mainIndex, setMainIndex] = React.useState(2);
   const [bone, setBone] = React.useState();
+  const [mainIndex, setMainIndex] = React.useState();
   const [bgColor, setBgColor] = React.useState("red");
   const [shuffle, setShuffle] = React.useState(false);
   const [clock, setClock] = React.useState(true);
@@ -65,23 +65,33 @@ const Main = () => {
       type: e.type,
       imageType: e.imageType,
       name: e.name,
-      background: e.background,
-      foreground: e.foreground,
+      background: e.background[0] === "#" ? e.background : `#${e.background}`,
+      foreground: e.foreground[0] === "#" ? e.foreground : `#${e.foreground}`,
       category: e.category,
     };
     const tempArray = bone["songs"];
     tempArray.push(song);
     bone["songs"] = tempArray;
-    setBone([...bone]);
     localStorage.setItem("music-player-03", JSON.stringify(bone));
-    // localStorage.setItem("music-player-");
+    setBone([...bone]);
+  };
+
+  const removeSong = (e) => {
+    if (e > 2) {
+      bone["songs"].splice(e, 1);
+      localStorage.setItem("music-player-03", JSON.stringify(bone));
+      setBone([...bone]);
+    }
   };
 
   React.useEffect(() => {
     //set Local Storage
     if (localStorage.getItem("music-player-03")) {
-      setBone(JSON.parse(localStorage.getItem("music-player-03")));
+      const d1 = JSON.parse(localStorage.getItem("music-player-03"));
+      setBone(d1);
+      setMainIndex(Math.floor(Math.random() * d1["songs"].length));
     } else {
+      setBone(MainData);
       localStorage.setItem("music-player-03", JSON.stringify(MainData));
     }
   }, []);
@@ -121,7 +131,9 @@ const Main = () => {
         onVisualizer={onVisualizer}
       />
       <Playlist
+        removeSong={removeSong}
         changeSong={changeSong}
+        mainIndex={mainIndex}
         color={
           bone
             ? bone["songs"][mainIndex].foreground
