@@ -10,9 +10,10 @@ import Playlist from "./components/Playlist";
 
 const Main = () => {
   const [background, setBackground] = React.useState(false);
+  const [songList, setSongList] = React.useState();
   const [bone, setBone] = React.useState();
+  //Bones is the main structure that will hold the playlist and the Toggles for the functions
   const [mainIndex, setMainIndex] = React.useState();
-  const [bgColor, setBgColor] = React.useState("red");
   const [shuffle, setShuffle] = React.useState(false);
   const [clock, setClock] = React.useState(true);
   const [visualizer, setVisualizer] = React.useState(true);
@@ -76,11 +77,13 @@ const Main = () => {
     setBone([...bone]);
   };
 
-  const removeSong = (e) => {
-    if (e > 2) {
-      bone["songs"].splice(e, 1);
+  const removeSong = () => {
+    if (mainIndex > 2) {
+      songList.splice(mainIndex, 1);
+      setSongList([...songList]);
+      setMainIndex(mainIndex - 1);
+      bone["songs"] = songList;
       localStorage.setItem("music-player-03", JSON.stringify(bone));
-      setBone([...bone]);
     }
   };
 
@@ -89,6 +92,7 @@ const Main = () => {
     if (localStorage.getItem("music-player-03")) {
       const d1 = JSON.parse(localStorage.getItem("music-player-03"));
       setBone(d1);
+      setSongList(d1["songs"]);
       setMainIndex(Math.floor(Math.random() * d1["songs"].length));
     } else {
       setBone(MainData);
@@ -96,12 +100,16 @@ const Main = () => {
     }
   }, []);
 
+  React.useEffect(() => {
+    console.log(songList);
+  }, [songList]);
+
   return (
     <div
       className="Main"
       style={{
         backgroundColor: bone
-          ? bone["songs"][mainIndex].background
+          ? songList[mainIndex].background
           : MainData["songs"][0].background,
       }}
     >
@@ -113,7 +121,7 @@ const Main = () => {
         <AudioVisualizer
           lineColor={
             bone
-              ? bone["songs"][mainIndex].foreground
+              ? songList[mainIndex].foreground
               : MainData["songs"][0].foreground
           }
         />
@@ -123,7 +131,11 @@ const Main = () => {
         addSong={addSong}
         bone={bone}
         mainIndex={mainIndex}
-        node={bone ? bone["songs"][mainIndex] : MainData["songs"][0]}
+        foreground={
+          songList
+            ? songList[mainIndex].foreground
+            : MainData["songs"][0].foreground
+        }
       />
       <Navigation
         onPlayer={onPlayer}
@@ -133,19 +145,18 @@ const Main = () => {
       <Playlist
         removeSong={removeSong}
         changeSong={changeSong}
-        mainIndex={mainIndex}
         color={
           bone
-            ? bone["songs"][mainIndex].foreground
+            ? songList[mainIndex].foreground
             : MainData["songs"][0].foreground
         }
-        bone={bone ? bone["songs"] : MainData["songs"]}
+        bone={songList ? songList : MainData["songs"]}
       />
       {player ? (
         <MusicPlayer
           onSkip={onSkip}
           onPrev={onPrev}
-          node={bone ? bone["songs"][mainIndex] : MainData["songs"][0]}
+          node={bone ? songList[mainIndex] : MainData["songs"][0]}
         />
       ) : null}
     </div>

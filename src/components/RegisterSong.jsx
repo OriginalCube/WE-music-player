@@ -71,7 +71,7 @@ const RegisterSong = (props) => {
   return (
     <div
       className="register"
-      style={{ border: `2px solid ${props.node.foreground}` }}
+      style={{ border: `2px solid ${props.foreground}` }}
     >
       <div className="register-container">
         <form onSubmit={handleSubmit}>
@@ -79,14 +79,14 @@ const RegisterSong = (props) => {
             style={{
               textAlign: "center",
               marginTop: "2%",
-              borderBottom: `2px solid ${props.node.foreground}`,
+              borderBottom: `2px solid ${props.foreground}`,
             }}
           >
             You Need to enable CEF devtools port to input texts.
           </p>
           {check.map((e) => (
             <RegisterInput
-              color={props.node.foreground}
+              color={props.foreground}
               key={e.id}
               {...e}
               value={value[e.name]}

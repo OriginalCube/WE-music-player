@@ -2,14 +2,12 @@ import React from "react";
 import PlaylistItem from "./PlaylistItem";
 
 const Playlist = (props) => {
-  const [bone, setBone] = React.useState([]);
-
   const removeSong = () => {
-    props.removeSong(props.mainIndex);
+    props.removeSong();
   };
 
   React.useEffect(() => {
-    setBone(props.bone);
+    console.log("Changes in Playlist");
   }, [props.bone]);
 
   return (
@@ -24,7 +22,7 @@ const Playlist = (props) => {
       </div>
       <div className="playlist-container">
         <div className="playlist-item-container">
-          {bone.map((e, index) => (
+          {props.bone.map((e, index) => (
             <PlaylistItem
               changeSong={props.changeSong}
               name={e.name}
