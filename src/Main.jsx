@@ -70,11 +70,10 @@ const Main = () => {
       foreground: e.foreground[0] === "#" ? e.foreground : `#${e.foreground}`,
       category: e.category,
     };
-    const tempArray = bone["songs"];
-    tempArray.push(song);
-    bone["songs"] = tempArray;
+    songList.push(song);
+    bone["songs"] = songList;
     localStorage.setItem("music-player-03", JSON.stringify(bone));
-    setBone([...bone]);
+    setSongList([...songList]);
   };
 
   const removeSong = () => {

@@ -2,8 +2,18 @@ import React from "react";
 import PlaylistItem from "./PlaylistItem";
 
 const Playlist = (props) => {
+  const [playlistPages, setPlaylistPages] = React.useState(0);
+
   const removeSong = () => {
     props.removeSong();
+  };
+
+  const onPages = (e) => {
+    if (playlistPages + e >= 0 && playlistPages + e < props.bone.length / 8) {
+      setPlaylistPages(playlistPages + e);
+    } else {
+      setPlaylistPages(0);
+    }
   };
 
   React.useEffect(() => {
@@ -22,20 +32,35 @@ const Playlist = (props) => {
       </div>
       <div className="playlist-container">
         <div className="playlist-item-container">
-          {props.bone.map((e, index) => (
-            <PlaylistItem
-              changeSong={props.changeSong}
-              name={e.name}
-              color={props.color}
-              index={index}
-              key={index}
-            />
-          ))}
+          {props.bone
+            .slice(playlistPages * 8, playlistPages * 8 + 8)
+            .map((e, index) => (
+              <PlaylistItem
+                changeSong={props.changeSong}
+                name={e.name}
+                color={props.color}
+                index={playlistPages * 8 + index}
+                key={index}
+              />
+            ))}
         </div>
         <div
           style={{ borderLeft: `3px solid ${props.color}` }}
           className="playlist-scroll"
-        ></div>
+        >
+          <div className="playlist-scroll-icon">
+            <img
+              onClick={() => onPages(1)}
+              src="./assets/icons/upBar.png"
+              alt=""
+            />
+            <img
+              onClick={() => onPages(-1)}
+              src="./assets/icons/downBar.png"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
       <div>
         <p

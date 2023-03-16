@@ -206,5 +206,29 @@ input[type="text"]:focus {
 }
 
 .playlist-scroll {
+  height: 100%;
   width: 10%;
+}
+
+.playlist-scroll-icon img {
+  position: relative;
+  width: 65%;
+  margin: auto;
+  margin-top: 5px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(5px);
+  }
+  75% {
+    transform: translatey(-2.5px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
 }
