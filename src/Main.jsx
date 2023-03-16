@@ -12,12 +12,15 @@ const Main = () => {
   const [background, setBackground] = React.useState(false);
   const [songList, setSongList] = React.useState();
   const [bone, setBone] = React.useState();
+  const [textSize, setTextSize] = React.useState(5);
   //Bones is the main structure that will hold the playlist and the Toggles for the functions
   const [mainIndex, setMainIndex] = React.useState();
   const [shuffle, setShuffle] = React.useState(false);
   const [clock, setClock] = React.useState(true);
   const [visualizer, setVisualizer] = React.useState(true);
   const [player, setPlayer] = React.useState(true);
+  const [playlist, setPlaylist] = React.useState(true);
+  const [register, setRegister] = React.useState(true);
 
   const onBackground = () => {
     setBackground(!background);
@@ -33,6 +36,14 @@ const Main = () => {
 
   const onPlayer = () => {
     setPlayer(!player);
+  };
+
+  const onRegister = () => {
+    setRegister(!register);
+  };
+
+  const onPlaylist = () => {
+    setPlaylist(!playlist);
   };
 
   const onSkip = () => {
@@ -86,6 +97,18 @@ const Main = () => {
     }
   };
 
+  //Wallpaper Engine Functions
+  try {
+    window.wallpaperPropertyListener = {
+      applyUserProperties: function (properties) {
+        setTextSize(properties.fontSize.value);
+        console.log(properties);
+      },
+    };
+  } catch (e) {
+    console.log(e);
+  }
+
   React.useEffect(() => {
     //set Local Storage
     if (localStorage.getItem("music-player-03")) {
@@ -126,31 +149,38 @@ const Main = () => {
         />
       ) : null}
       {clock ? <Clock /> : null}
-      <RegisterSong
-        addSong={addSong}
-        bone={bone}
-        mainIndex={mainIndex}
-        foreground={
-          songList
-            ? songList[mainIndex].foreground
-            : MainData["songs"][0].foreground
-        }
-      />
+      {register ? (
+        <RegisterSong
+          addSong={addSong}
+          bone={bone}
+          mainIndex={mainIndex}
+          foreground={
+            songList
+              ? songList[mainIndex].foreground
+              : MainData["songs"][0].foreground
+          }
+        />
+      ) : null}
       <Navigation
+        onRegister={onRegister}
+        onPlaylist={onPlaylist}
         onPlayer={onPlayer}
         onClock={onClock}
         onVisualizer={onVisualizer}
       />
-      <Playlist
-        removeSong={removeSong}
-        changeSong={changeSong}
-        color={
-          bone
-            ? songList[mainIndex].foreground
-            : MainData["songs"][0].foreground
-        }
-        bone={songList ? songList : MainData["songs"]}
-      />
+      {playlist ? (
+        <Playlist
+          textSize={textSize}
+          removeSong={removeSong}
+          changeSong={changeSong}
+          color={
+            bone
+              ? songList[mainIndex].foreground
+              : MainData["songs"][0].foreground
+          }
+          bone={songList ? songList : MainData["songs"]}
+        />
+      ) : null}
       {player ? (
         <MusicPlayer
           onSkip={onSkip}

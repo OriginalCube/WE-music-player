@@ -188,16 +188,15 @@ input[type="text"]:focus {
 .playlist-footer {
   text-align: center;
   padding: 5px;
-  font-size: 1.25rem; /* 20px */
   line-height: 1.75rem; /* 28px */
 }
 
 .playlist-item {
   width: 90%;
   margin: auto;
-  font-size: 1rem; /* 16px */
+  padding: 2px;
   line-height: 1.5rem; /* 24px */
-  margin-bottom: 2.5%;
+  margin-top: 5%;
 }
 
 .playlist-item-container {

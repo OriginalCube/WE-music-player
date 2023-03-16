@@ -25,7 +25,10 @@ const Playlist = (props) => {
       <div>
         <p
           className="playlist-title"
-          style={{ borderBottom: `3px solid ${props.color}` }}
+          style={{
+            borderBottom: `3px solid ${props.color}`,
+            fontSize: `${props.textSize * 0.3}rem`,
+          }}
         >
           Playlist
         </p>
@@ -36,6 +39,7 @@ const Playlist = (props) => {
             .slice(playlistPages * 8, playlistPages * 8 + 8)
             .map((e, index) => (
               <PlaylistItem
+                textSize={props.textSize}
                 changeSong={props.changeSong}
                 name={e.name}
                 color={props.color}
@@ -66,7 +70,10 @@ const Playlist = (props) => {
         <p
           onClick={removeSong}
           className="playlist-footer"
-          style={{ borderTop: `3px solid ${props.color}` }}
+          style={{
+            borderTop: `3px solid ${props.color}`,
+            fontSize: `${props.textSize * 0.25}rem`,
+          }}
         >
           Remove Current Song
         </p>

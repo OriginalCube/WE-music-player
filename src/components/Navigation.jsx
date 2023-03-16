@@ -29,6 +29,16 @@ const Navigation = (props) => {
     onSound(1);
   };
 
+  const onPlaylist = () => {
+    props.onPlaylist();
+    onSound(1);
+  };
+
+  const onRegister = () => {
+    props.onRegister();
+    onSound(1);
+  };
+
   const onSetting = () => {
     setSetting(!setting);
     onSound(0);
@@ -47,6 +57,8 @@ const Navigation = (props) => {
           <img onClick={onClock} src="./assets/icons/clock.png" alt="" />
           <img onClick={onVisualizer} src="./assets/icons/sound.png" alt="" />
           <img onClick={onPlayer} src="./assets/icons/headphones.png" alt="" />
+          <img onClick={onPlaylist} src="./assets/icons/playlist.png" alt="" />
+          <img onClick={onRegister} src="./assets/icons/register.png" alt="" />
         </div>
       ) : null}
     </>
