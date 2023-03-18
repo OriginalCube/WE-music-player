@@ -12,7 +12,7 @@ const Main = () => {
   const [background, setBackground] = React.useState(false);
   const [songList, setSongList] = React.useState();
   const [bone, setBone] = React.useState();
-  const [textSize, setTextSize] = React.useState(5);
+  const [textSize, setTextSize] = React.useState(10);
   //Bones is the main structure that will hold the playlist and the Toggles for the functions
   const [mainIndex, setMainIndex] = React.useState();
   const [shuffle, setShuffle] = React.useState(false);
@@ -122,10 +122,6 @@ const Main = () => {
     }
   }, []);
 
-  React.useEffect(() => {
-    console.log(songList);
-  }, [songList]);
-
   return (
     <div
       className="Main"
@@ -151,6 +147,7 @@ const Main = () => {
       {clock ? <Clock /> : null}
       {register ? (
         <RegisterSong
+          textSize={textSize}
           addSong={addSong}
           bone={bone}
           mainIndex={mainIndex}

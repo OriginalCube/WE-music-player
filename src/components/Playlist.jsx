@@ -21,62 +21,68 @@ const Playlist = (props) => {
   }, [props.bone]);
 
   return (
-    <div className="playlist" style={{ border: `3px solid ${props.color}` }}>
-      <div>
+    <div
+      className="playlist-container"
+      style={{ border: `3px solid ${props.color}` }}
+    >
+      <div className="playlist-navigation">
         <p
-          className="playlist-title"
           style={{
-            borderBottom: `3px solid ${props.color}`,
-            fontSize: `${props.textSize * 0.3}rem`,
+            padding: `${props.textSize * 0.8}px`,
+            fontSize: `${props.textSize * 0.125}rem`,
           }}
         >
           Playlist
         </p>
       </div>
-      <div className="playlist-container">
+      <div
+        className="playlist"
+        style={{
+          borderTop: `3px solid ${props.color}`,
+          borderBottom: `3px solid ${props.color}`,
+        }}
+      >
         <div className="playlist-item-container">
           {props.bone
             .slice(playlistPages * 8, playlistPages * 8 + 8)
             .map((e, index) => (
               <PlaylistItem
-                textSize={props.textSize}
-                changeSong={props.changeSong}
-                name={e.name}
-                color={props.color}
                 index={playlistPages * 8 + index}
-                key={index}
+                name={e.name}
+                textSize={props.textSize}
+                color={props.color}
+                changeSong={props.changeSong}
               />
             ))}
         </div>
         <div
+          className="playlist-scrollbar"
           style={{ borderLeft: `3px solid ${props.color}` }}
-          className="playlist-scroll"
         >
-          <div className="playlist-scroll-icon">
+          <div className="playlist-scrollbar-icons">
             <img
-              onClick={() => onPages(1)}
               src="./assets/icons/upBar.png"
+              onClick={() => onPages(1)}
               alt=""
             />
+          </div>
+          <div className="playlist-scrollbar-icons">
             <img
-              onClick={() => onPages(-1)}
               src="./assets/icons/downBar.png"
+              onClick={() => onPages(-1)}
               alt=""
             />
           </div>
         </div>
       </div>
-      <div>
-        <p
-          onClick={removeSong}
-          className="playlist-footer"
-          style={{
-            borderTop: `3px solid ${props.color}`,
-            fontSize: `${props.textSize * 0.25}rem`,
-          }}
-        >
-          Remove Current Song
-        </p>
+      <div
+        className="playlist-footer"
+        style={{
+          padding: `${props.textSize * 0.8}px`,
+          fontSize: `${props.textSize * 0.125}rem`,
+        }}
+      >
+        <p onClick={() => props.removeSong()}>Remove Song</p>
       </div>
     </div>
   );

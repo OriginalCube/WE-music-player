@@ -71,30 +71,45 @@ const RegisterSong = (props) => {
   return (
     <div
       className="register"
-      style={{ border: `2px solid ${props.foreground}` }}
+      style={{ border: `3px solid ${props.foreground}` }}
     >
+      <div
+        className="register-header"
+        style={{ borderBottom: `3px solid ${props.foreground}` }}
+      >
+        <p
+          style={{
+            width: "80%",
+            margin: "auto",
+          }}
+        >
+          You need to enable CEF dev tools to enable inputs.
+        </p>
+      </div>
       <div className="register-container">
-        <form onSubmit={handleSubmit}>
-          <p
+        {check.map((e) => (
+          <RegisterInput
+            textSize={props.textSize}
+            color={props.foreground}
+            key={e.id}
+            {...e}
+            value={value[e.name]}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+      <div className="register-footer">
+        <div className="register-footer-button">
+          <button
+            onClick={handleSubmit}
             style={{
-              textAlign: "center",
-              marginTop: "2%",
-              borderBottom: `2px solid ${props.foreground}`,
+              padding: `${props.textSize * 0.2}px ${props.textSize * 1}px`,
+              border: `2px solid ${props.foreground}`,
             }}
           >
-            You Need to enable CEF devtools port to input texts.
-          </p>
-          {check.map((e) => (
-            <RegisterInput
-              color={props.foreground}
-              key={e.id}
-              {...e}
-              value={value[e.name]}
-              onChange={onChange}
-            />
-          ))}
-          <button className="submit-button">Submit</button>
-        </form>
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );

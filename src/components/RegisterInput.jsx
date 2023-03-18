@@ -7,8 +7,8 @@ const RegisterInput = (props) => {
     setFocused(true);
   };
   return (
-    <div>
-      <label>{label}</label>
+    <div className="register-item" style={{ paddingTop: "2.5px" }}>
+      <label style={{ fontSize: `${props.textSize * 0.1}rem` }}>{label}</label>
       <br />
       <input
         style={{ border: `2px solid ${props.color}` }}
