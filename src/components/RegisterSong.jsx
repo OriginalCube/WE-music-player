@@ -79,6 +79,7 @@ const RegisterSong = (props) => {
       >
         <p
           style={{
+            fontSize: `${props.textSize * 0.1}rem`,
             width: "80%",
             margin: "auto",
           }}
@@ -104,6 +105,7 @@ const RegisterSong = (props) => {
             onClick={handleSubmit}
             style={{
               padding: `${props.textSize * 0.2}px ${props.textSize * 1}px`,
+              fontSize: `${props.textSize * 0.1}rem`,
               border: `2px solid ${props.foreground}`,
             }}
           >
