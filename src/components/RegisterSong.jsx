@@ -6,7 +6,7 @@ const RegisterSong = (props) => {
     name: "",
     type: "",
     imageType: "",
-    background: "#ffffff",
+    background: "#000000",
     foreground: "#ffffff",
     category: "",
   });
@@ -61,7 +61,19 @@ const RegisterSong = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.addSong(value);
+    if (
+      value.name === "" ||
+      value.category === "" ||
+      value.imageType === "" ||
+      value.type === ""
+    ) {
+      alert("Values must not be empty!");
+    } else {
+      props.addSong(value);
+    }
+    const audioPlayer = new Audio("./assets/audios/keypress.mp3");
+    audioPlayer.volume = 0.5;
+    audioPlayer.play();
   };
 
   const onChange = (e) => {
@@ -80,6 +92,7 @@ const RegisterSong = (props) => {
         <p
           style={{
             fontSize: `${props.textSize * 0.1}rem`,
+            textShadow: `1px 1px 2px ${props.foreground}`,
             width: "80%",
             margin: "auto",
           }}

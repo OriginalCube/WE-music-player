@@ -17,7 +17,7 @@
       "imageType": "jpg",
       "name": "That Band",
       "background": "#0C3958",
-      "foreground": "#4C2633",
+      "foreground": "#1A7CC3",
       "category": "Anime"
     },
     {
@@ -30,5 +30,12 @@
       "foreground": "#E81A5B",
       "category": "Anime"
     }
+  ],
+  "presets": [
+    { "playlist": true },
+    { "player": true },
+    { "register": true },
+    { "visualizer": true },
+    { "clock": true }
   ]
 }

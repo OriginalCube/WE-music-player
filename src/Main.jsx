@@ -13,47 +13,74 @@ const Main = () => {
   const [songList, setSongList] = React.useState();
   const [bone, setBone] = React.useState();
   const [textSize, setTextSize] = React.useState(10);
+  const [presets, setPresets] = React.useState([]);
   //Bones is the main structure that will hold the playlist and the Toggles for the functions
-  const [mainIndex, setMainIndex] = React.useState();
+  const [mainIndex, setMainIndex] = React.useState(0);
   const [shuffle, setShuffle] = React.useState(false);
+  const [replay, setReplay] = React.useState(false);
   const [clock, setClock] = React.useState(true);
   const [visualizer, setVisualizer] = React.useState(true);
   const [player, setPlayer] = React.useState(true);
   const [playlist, setPlaylist] = React.useState(true);
   const [register, setRegister] = React.useState(true);
 
-  const onBackground = () => {
-    setBackground(!background);
-  };
+  // const onBackground = () => {
+  //   setBackground(!background);
+  // };
 
   const onClock = () => {
     setClock(!clock);
+    changePresets(4, { clock: !clock });
   };
 
   const onVisualizer = () => {
     setVisualizer(!visualizer);
+    changePresets(3, { visualizer: !visualizer });
   };
 
   const onPlayer = () => {
     setPlayer(!player);
+    changePresets(1, { player: !player });
   };
 
   const onRegister = () => {
     setRegister(!register);
+    changePresets(2, { register: !register });
   };
 
   const onPlaylist = () => {
     setPlaylist(!playlist);
+    changePresets(0, { playlist: !playlist });
+  };
+
+  const changePresets = (x, y) => {
+    let tempPresets = presets;
+    tempPresets[x] = y;
+    setPresets([...tempPresets]);
+    bone["presets"] = tempPresets;
+    localStorage.setItem("music-player-03", JSON.stringify(bone));
   };
 
   const onSkip = () => {
     if (shuffle) {
-      console.log("random songs");
-    } else {
-      if (mainIndex + 1 < bone["songs"].length) {
-        setMainIndex(mainIndex + 1);
+      if (songList) {
+        setMainIndex(Math.floor(songList.length * Math.random()));
       } else {
-        setMainIndex(0);
+        setMainIndex(Math.floor(MainData["songs"].length * Math.random()));
+      }
+    } else {
+      if (songList) {
+        if (mainIndex + 1 < songList.length) {
+          setMainIndex(mainIndex + 1);
+        } else {
+          setMainIndex(0);
+        }
+      } else {
+        if (mainIndex + 1 < MainData["songs"].length) {
+          setMainIndex(mainIndex + 1);
+        } else {
+          setMainIndex(0);
+        }
       }
     }
   };
@@ -88,13 +115,11 @@ const Main = () => {
   };
 
   const removeSong = () => {
-    if (mainIndex > 2) {
-      songList.splice(mainIndex, 1);
-      setSongList([...songList]);
-      setMainIndex(mainIndex - 1);
-      bone["songs"] = songList;
-      localStorage.setItem("music-player-03", JSON.stringify(bone));
-    }
+    songList.splice(mainIndex, 1);
+    setSongList([...songList]);
+    setMainIndex(mainIndex - 1);
+    bone["songs"] = songList;
+    localStorage.setItem("music-player-03", JSON.stringify(bone));
   };
 
   //Wallpaper Engine Functions
@@ -102,7 +127,6 @@ const Main = () => {
     window.wallpaperPropertyListener = {
       applyUserProperties: function (properties) {
         setTextSize(properties.fontSize.value);
-        console.log(properties);
       },
     };
   } catch (e) {
@@ -111,14 +135,30 @@ const Main = () => {
 
   React.useEffect(() => {
     //set Local Storage
-    if (localStorage.getItem("music-player-03")) {
-      const d1 = JSON.parse(localStorage.getItem("music-player-03"));
-      setBone(d1);
-      setSongList(d1["songs"]);
-      setMainIndex(Math.floor(Math.random() * d1["songs"].length));
-    } else {
+    try {
+      if (localStorage.getItem("music-player-03")) {
+        const d1 = JSON.parse(localStorage.getItem("music-player-03"));
+        setBone(d1);
+        setSongList(d1["songs"]);
+        setMainIndex(Math.floor(Math.random() * d1["songs"].length));
+        const presets = d1["presets"];
+        setPresets(d1["presets"]);
+        setPlaylist(presets[0].playlist);
+        setPlayer(presets[1].player);
+        setRegister(presets[2].register);
+        setVisualizer(presets[3].visualizer);
+        setClock(presets[4].clock);
+      } else {
+        setBone(MainData);
+        localStorage.setItem("music-player-03", JSON.stringify(MainData));
+        setSongList(MainData["songs"]);
+        setPresets(MainData["presets"]);
+      }
+    } catch (e) {
       setBone(MainData);
       localStorage.setItem("music-player-03", JSON.stringify(MainData));
+      setSongList(MainData["songs"]);
+      setPresets(MainData["presets"]);
     }
   }, []);
 
@@ -132,7 +172,7 @@ const Main = () => {
       }}
     >
       <Background
-        node={bone ? bone["songs"][mainIndex] : "./assets/images/That Band.jpg"}
+        node={songList ? songList[mainIndex] : MainData["songs"][0]}
         mode={background}
       />
       {visualizer ? (
@@ -144,7 +184,15 @@ const Main = () => {
           }
         />
       ) : null}
-      {clock ? <Clock /> : null}
+      {clock ? (
+        <Clock
+          color={
+            songList
+              ? songList[mainIndex].foreground
+              : MainData["songs"][0].foreground
+          }
+        />
+      ) : null}
       {register ? (
         <RegisterSong
           textSize={textSize}
@@ -167,6 +215,7 @@ const Main = () => {
       />
       {playlist ? (
         <Playlist
+          mainIndex={mainIndex}
           textSize={textSize}
           removeSong={removeSong}
           changeSong={changeSong}
@@ -180,6 +229,16 @@ const Main = () => {
       ) : null}
       {player ? (
         <MusicPlayer
+          setShuffle={setShuffle}
+          shuffle={shuffle}
+          replay={replay}
+          setReplay={setReplay}
+          color={
+            songList
+              ? songList[mainIndex].foreground
+              : MainData["songs"][0].foreground
+          }
+          textSize={textSize}
           onSkip={onSkip}
           onPrev={onPrev}
           node={bone ? songList[mainIndex] : MainData["songs"][0]}

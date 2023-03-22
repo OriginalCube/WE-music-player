@@ -8,10 +8,19 @@ const RegisterInput = (props) => {
   };
   return (
     <div className="register-item" style={{ paddingTop: "2.5px" }}>
-      <label style={{ fontSize: `${props.textSize * 0.1}rem` }}>{label}</label>
+      <label
+        style={{
+          fontSize: `${props.textSize * 0.1}rem`,
+          textShadow: `1px 1px 2px ${props.color}`,
+        }}
+      >
+        {label}
+      </label>
       <br />
       <input
-        style={{ border: `2px solid ${props.color}` }}
+        style={{
+          border: `2px solid ${props.color}`,
+        }}
         {...inputProps}
         className="text-area"
         onChange={onChange}

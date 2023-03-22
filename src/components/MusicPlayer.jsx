@@ -16,7 +16,7 @@ const MusicPlayer = (props) => {
   const { duration } = audioRef.current;
 
   const clickAudio = (e) => {
-    keypress.src = "./assets/audios/keypress.mp3";
+    keypress.src = `./assets/audios/${e === 0 ? "keypress" : "notes"}.mp3`;
     keypress.volume = 0.5;
     keypress.play();
   };
@@ -52,10 +52,12 @@ const MusicPlayer = (props) => {
 
   const onPrev = () => {
     props.onPrev();
+    clickAudio(0);
   };
 
   const onSkip = () => {
     props.onSkip();
+    clickAudio(0);
   };
 
   const onPlay = () => {
@@ -66,6 +68,7 @@ const MusicPlayer = (props) => {
       audioRef.current.play();
       setPlaying(true);
     }
+    clickAudio(1);
   };
 
   const lessVolume = () => {
@@ -74,19 +77,27 @@ const MusicPlayer = (props) => {
     } else {
       setVolume(0);
     }
-    clickAudio();
+    clickAudio(0);
   };
 
   const addVolume = () => {
     if (volume >= 0 && volume + 0.1 <= 1) {
       setVolume(volume + 0.1);
     }
-    clickAudio();
+    clickAudio(0);
   };
 
-  const onReplay = () => {};
+  const onReplay = () => {
+    props.setShuffle(false);
+    props.setReplay(!props.replay);
+    clickAudio(0);
+  };
 
-  const onShuffle = () => {};
+  const onShuffle = () => {
+    props.setReplay(false);
+    props.setShuffle(!props.shuffle);
+    clickAudio(0);
+  };
 
   React.useEffect(() => {
     audioRef.current.volume = volume;
@@ -128,7 +139,15 @@ const MusicPlayer = (props) => {
 
   return (
     <div className="player">
-      <p className="player-text">{props.node.name}</p>
+      <p
+        className="player-text"
+        style={{
+          fontSize: `${props.textSize * 0.125}rem`,
+          textShadow: `1px 1px 2px ${props.color}`,
+        }}
+      >
+        {props.node.name}
+      </p>
       <input
         type="range"
         step="1"

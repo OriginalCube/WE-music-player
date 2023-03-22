@@ -3,17 +3,28 @@ import PlaylistItem from "./PlaylistItem";
 
 const Playlist = (props) => {
   const [playlistPages, setPlaylistPages] = React.useState(0);
+  let audioClicked = new Audio();
 
-  const removeSong = () => {
-    props.removeSong();
+  const audioBite = (e) => {
+    audioClicked.src = `./assets/audios/${e === 1 ? "notes" : "keypress"}.mp3`;
+    audioClicked.volume = 0.4;
+    audioClicked.play();
+  };
+
+  const onRemoveSong = () => {
+    if (props.mainIndex > 2) {
+      props.removeSong();
+    }
+    audioBite(0);
   };
 
   const onPages = (e) => {
-    if (playlistPages + e >= 0 && playlistPages + e < props.bone.length / 8) {
+    if (playlistPages + e >= 0 && playlistPages + e < props.bone.length / 5) {
       setPlaylistPages(playlistPages + e);
     } else {
       setPlaylistPages(0);
     }
+    audioBite(1);
   };
 
   React.useEffect(() => {
@@ -30,6 +41,7 @@ const Playlist = (props) => {
           style={{
             padding: `${props.textSize * 0.8}px`,
             fontSize: `${props.textSize * 0.125}rem`,
+            textShadow: `1px 1px 2px ${props.color}`,
           }}
         >
           Playlist
@@ -44,10 +56,10 @@ const Playlist = (props) => {
       >
         <div className="playlist-item-container">
           {props.bone
-            .slice(playlistPages * 8, playlistPages * 8 + 8)
+            .slice(playlistPages * 5, playlistPages * 5 + 5)
             .map((e, index) => (
               <PlaylistItem
-                index={playlistPages * 8 + index}
+                index={playlistPages * 5 + index}
                 name={e.name}
                 textSize={props.textSize}
                 color={props.color}
@@ -76,13 +88,15 @@ const Playlist = (props) => {
         </div>
       </div>
       <div
+        onClick={() => onRemoveSong()}
         className="playlist-footer"
         style={{
+          textShadow: `1px 1px 2px ${props.color}`,
           padding: `${props.textSize * 0.8}px`,
           fontSize: `${props.textSize * 0.125}rem`,
         }}
       >
-        <p onClick={() => props.removeSong()}>Remove Song</p>
+        <p>Remove Song</p>
       </div>
     </div>
   );
