@@ -1,7 +1,7 @@
 import React from "react";
 
 const Navigation = (props) => {
-  const [setting, setSetting] = React.useState(true);
+  const [setting, setSetting] = React.useState(false);
   let audioPlayer = new Audio();
 
   const onSound = (e) => {
