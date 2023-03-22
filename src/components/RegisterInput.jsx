@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React from "react";
 
 const RegisterInput = (props) => {
@@ -20,6 +21,7 @@ const RegisterInput = (props) => {
       <input
         style={{
           border: `2px solid ${props.color}`,
+          fontSize: `${props.textSize * 0.095}rem`,
         }}
         {...inputProps}
         className="text-area"

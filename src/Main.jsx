@@ -186,6 +186,7 @@ const Main = () => {
       ) : null}
       {clock ? (
         <Clock
+          textSize={textSize}
           color={
             songList
               ? songList[mainIndex].foreground
