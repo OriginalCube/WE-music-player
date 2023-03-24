@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Spotify";
+  src: local("Spotify"), url(./fonts/Heebo-Regular.ttf) format("TrueType");
+}
+
 * {
+  font-family: "Spotify";
   color: white;
   overflow: hidden;
   margin: 0;

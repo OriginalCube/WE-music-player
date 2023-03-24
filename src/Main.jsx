@@ -140,7 +140,7 @@ const Main = () => {
         const d1 = JSON.parse(localStorage.getItem("music-player-03"));
         setBone(d1);
         setSongList(d1["songs"]);
-        setMainIndex(Math.floor(Math.random() * d1["songs"].length));
+        setMainIndex(Math.floor(d1["songs"].length * Math.random()));
         const presets = d1["presets"];
         setPresets(d1["presets"]);
         setPlaylist(presets[0].playlist);
@@ -148,17 +148,20 @@ const Main = () => {
         setRegister(presets[2].register);
         setVisualizer(presets[3].visualizer);
         setClock(presets[4].clock);
+        setMainIndex(Math.floor(d1["songs"].length * Math.random()));
       } else {
         setBone(MainData);
         localStorage.setItem("music-player-03", JSON.stringify(MainData));
         setSongList(MainData["songs"]);
         setPresets(MainData["presets"]);
+        setMainIndex(Math.floor(MainData["songs"].length - 1 * Math.random()));
       }
     } catch (e) {
       setBone(MainData);
       localStorage.setItem("music-player-03", JSON.stringify(MainData));
       setSongList(MainData["songs"]);
       setPresets(MainData["presets"]);
+      setMainIndex(Math.floor(MainData["songs"].length() - 1 * Math.random()));
     }
   }, []);
 

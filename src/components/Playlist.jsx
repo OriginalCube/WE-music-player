@@ -74,14 +74,14 @@ const Playlist = (props) => {
           <div className="playlist-scrollbar-icons">
             <img
               src="./assets/icons/upBar.png"
-              onClick={() => onPages(1)}
+              onClick={() => onPages(-1)}
               alt=""
             />
           </div>
           <div className="playlist-scrollbar-icons">
             <img
               src="./assets/icons/downBar.png"
-              onClick={() => onPages(-1)}
+              onClick={() => onPages(1)}
               alt=""
             />
           </div>
