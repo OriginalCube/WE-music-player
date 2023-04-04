@@ -5,7 +5,7 @@ const PlaylistItem = (props) => {
     const audioPlayer = new Audio("./assets/audios/keypress.mp3");
     audioPlayer.volume = 0.5;
     audioPlayer.play();
-    props.changeSong(props.index);
+    props.changeSong(props.name);
   };
   return (
     <div

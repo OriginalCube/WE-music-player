@@ -23,6 +23,7 @@ const Main = () => {
   const [player, setPlayer] = React.useState(true);
   const [playlist, setPlaylist] = React.useState(true);
   const [register, setRegister] = React.useState(true);
+  const [category, setCategory] = React.useState([]); //Fix need 2? 1 for id and 1 for the category itself prob not can use the const ?
 
   // const onBackground = () => {
   //   setBackground(!background);
@@ -94,7 +95,8 @@ const Main = () => {
   };
 
   const changeSong = (e) => {
-    setMainIndex(e);
+    const musicId = songList.findIndex((bones) => bones.name === e);
+    setMainIndex(musicId);
   };
 
   const addSong = (e) => {
@@ -149,6 +151,8 @@ const Main = () => {
         setVisualizer(presets[3].visualizer);
         setClock(presets[4].clock);
         setMainIndex(Math.floor(d1["songs"].length * Math.random()));
+        const categories = d1["category"];
+        setCategory(categories);
       } else {
         setBone(MainData);
         localStorage.setItem("music-player-03", JSON.stringify(MainData));
@@ -223,6 +227,7 @@ const Main = () => {
           textSize={textSize}
           removeSong={removeSong}
           changeSong={changeSong}
+          category={category}
           color={
             bone
               ? songList[mainIndex].foreground

@@ -3,6 +3,7 @@ import PlaylistItem from "./PlaylistItem";
 
 const Playlist = (props) => {
   const [playlistPages, setPlaylistPages] = React.useState(0);
+  const [id, setId] = React.useState(0);
   let audioClicked = new Audio();
 
   const audioBite = (e) => {
@@ -27,6 +28,18 @@ const Playlist = (props) => {
     audioBite(1);
   };
 
+  const onPlaylist = () => {
+    if (id + 1 <= props.category.length) {
+      setId(id + 1);
+    } else {
+      setId(0);
+    }
+  };
+
+  React.useEffect(() => {
+    console.log(id);
+  }, [id]);
+
   React.useEffect(() => {
     console.log("Changes in Playlist");
   }, [props.bone]);
@@ -44,7 +57,7 @@ const Playlist = (props) => {
             textShadow: `1px 1px 2px ${props.color}`,
           }}
         >
-          Playlist
+          {id === 0 ? "Playlist" : props.category[id - 1]}
         </p>
       </div>
       <div
@@ -55,17 +68,30 @@ const Playlist = (props) => {
         }}
       >
         <div className="playlist-item-container">
-          {props.bone
-            .slice(playlistPages * 5, playlistPages * 5 + 5)
-            .map((e, index) => (
-              <PlaylistItem
-                index={playlistPages * 5 + index}
-                name={e.name}
-                textSize={props.textSize}
-                color={props.color}
-                changeSong={props.changeSong}
-              />
-            ))}
+          {id === 0
+            ? props.bone
+                .slice(playlistPages * 5, playlistPages * 5 + 5)
+                .map((e, index) => (
+                  <PlaylistItem
+                    index={playlistPages * 5 + index}
+                    name={e.name}
+                    textSize={props.textSize}
+                    color={props.color}
+                    changeSong={props.changeSong}
+                  />
+                ))
+            : props.bone
+                .filter((e) => e.category === props.category[id - 1])
+                .slice(playlistPages * 5, playlistPages * 5 + 5)
+                .map((e, index) => (
+                  <PlaylistItem
+                    index={playlistPages * 5 + index}
+                    name={e.name}
+                    textSize={props.textSize}
+                    color={props.color}
+                    changeSong={props.changeSong}
+                  />
+                ))}
         </div>
         <div
           className="playlist-scrollbar"
@@ -87,16 +113,31 @@ const Playlist = (props) => {
           </div>
         </div>
       </div>
-      <div
-        onClick={() => onRemoveSong()}
-        className="playlist-footer"
-        style={{
-          textShadow: `1px 1px 2px ${props.color}`,
-          padding: `${props.textSize * 0.8}px`,
-          fontSize: `${props.textSize * 0.125}rem`,
-        }}
-      >
-        <p>Remove Song</p>
+      <div className="playlist-footer flex">
+        <div
+          className="w-full"
+          onClick={() => onRemoveSong()}
+          style={{
+            textShadow: `1px 1px 2px ${props.color}`,
+            padding: `${props.textSize * 0.8}px`,
+            fontSize: `${props.textSize * 0.1}rem`,
+            borderRight: `2px solid ${props.color}`,
+          }}
+        >
+          <p>Remove Song</p>
+        </div>
+        <div
+          className="w-full"
+          onClick={() => onPlaylist()}
+          style={{
+            textShadow: `1px 1px 2px ${props.color}`,
+            padding: `${props.textSize * 0.8}px`,
+            fontSize: `${props.textSize * 0.1}rem`,
+            borderLeft: `2px solid ${props.color}`,
+          }}
+        >
+          <p>Change Playlist</p>
+        </div>
       </div>
     </div>
   );

@@ -133,10 +133,10 @@
 
 .register {
   position: absolute;
-  top: 27.5%;
+  top: 25.5%;
   left: 8%;
   width: 18%;
-  height: 45%;
+  height: 55%;
   display: flex;
   flex-direction: column;
 }
@@ -150,9 +150,14 @@
 
 .register-container {
   width: 90%;
-  height: 80%;
+  height: 65%;
   margin: auto;
   display: flex;
+  flex-direction: column;
+}
+
+.register-container-1 {
+  margin: auto;
   flex-direction: column;
 }
 
