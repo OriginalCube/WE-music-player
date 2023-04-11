@@ -2,7 +2,7 @@ import React from "react";
 import RegisterInput from "./RegisterInput";
 
 const RegisterSong = (props) => {
-  const [colorMode, setColorMode] = React.useState(false);
+  const [colorMode, setColorMode] = React.useState(true);
   const [value, setValue] = React.useState({
     name: "",
     type: "",
@@ -95,28 +95,34 @@ const RegisterSong = (props) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
+  const changeMode = () => {
+    setColorMode(!colorMode);
+    const audioPlayer = new Audio("./assets/audios/keypress.mp3");
+    audioPlayer.volume = 0.5;
+    audioPlayer.play();
+  };
+
   return (
     <div
-      className="register"
+      className="register h-3/5 w-1/5 absolute flex flex-col"
       style={{ border: `3px solid ${props.foreground}` }}
     >
       <div
-        className="register-header"
-        style={{ borderBottom: `3px solid ${props.foreground}` }}
+        className="text-center w-full"
+        style={{ height: "10%", borderBottom: `3px solid ${props.foreground}` }}
       >
         <p
-          style={{
-            fontSize: `${props.textSize * 0.1}rem`,
-            textShadow: `1px 1px 2px ${props.foreground}`,
-            width: "80%",
-            margin: "auto",
-          }}
+          className="w-5/6 m-auto"
+          style={{ fontSize: `${props.textSize * 0.1}rem` }}
         >
-          You need to enable CEF dev tools to enable inputs.
+          Check Guide in the Description to add Custom Music!
         </p>
       </div>
-      <div className="flex flex-col" style={{ height: "90%" }}>
-        <div className="register-container">
+      <div
+        className="flex flex-col m-auto"
+        style={{ height: "80%", width: "90%" }}
+      >
+        <div className="flex flex-col justify-evenly h-2/3">
           {check.slice(0, 4).map((e) => (
             <RegisterInput
               textSize={props.textSize}
@@ -128,13 +134,11 @@ const RegisterSong = (props) => {
             />
           ))}
         </div>
-
-        <div className=" flex m-auto" style={{ width: "90%", height: "35%" }}>
-          <div className="flex flex-col w-full">
+        <div className="flex " style={{ height: "30%" }}>
+          <div className="flex flex-col justify-evenly w-5/6">
             {colorMode ? (
-              check
-                .slice(4, 7)
-                .map((e) => (
+              <div className="w-full flex flex-col">
+                {check.slice(4, 7).map((e) => (
                   <RegisterInput
                     textSize={props.textSize}
                     color={props.foreground}
@@ -143,10 +147,11 @@ const RegisterSong = (props) => {
                     value={value[e.name]}
                     onChange={onChange}
                   />
-                ))
+                ))}
+              </div>
             ) : (
               <div
-                className="h-full w-full flex flex-nowrap flex-col"
+                className="w-full flex flex-col border-2 border-red-200 h-full"
                 onChange={onPresetColor}
               >
                 {presetColors.map((e) => (
@@ -170,45 +175,41 @@ const RegisterSong = (props) => {
               </div>
             )}
           </div>
-          <div style={{ width: "25%" }} className="h-full">
-            <button
-              className="h-1/3 w-full text-center relative font-medium"
-              style={{
-                outline: "none",
-                border: `2px solid ${props.foreground}`,
-                fontSize: `${props.textSize * 0.08}rem`,
-                textShadow: `1px 1px 2px ${props.foreground}`,
-                top: "35%",
-              }}
-              onClick={() => setColorMode(!colorMode)}
-            >
-              {!colorMode ? "Custom" : "Preset"}
-            </button>
+          <div
+            className="h-1/3 w-1/6 text-center relative font-medium"
+            style={{
+              outline: "none",
+              border: `2px solid ${props.foreground}`,
+              fontSize: `${props.textSize * 0.08}rem`,
+              textShadow: `1px 1px 2px ${props.foreground}`,
+              top: "35%",
+            }}
+            onClick={changeMode}
+          >
+            <p>{colorMode ? "Custom" : "Preset"}</p>
           </div>
         </div>
       </div>
-      <div className="register-footer">
-        <div className="register-footer-button">
-          <button
-            onClick={handleSubmit}
-            style={{
-              padding: `${props.textSize * 0.2}px ${props.textSize * 1}px`,
-              fontSize: `${props.textSize * 0.1}rem`,
-              border: `2px solid ${props.foreground}`,
-            }}
-          >
-            Submit Music
-          </button>
-          <button
-            onClick={handleSubmit}
-            style={{
-              padding: `${props.textSize * 0.2}px ${props.textSize * 1}px`,
-              fontSize: `${props.textSize * 0.1}rem`,
-              border: `2px solid ${props.foreground}`,
-            }}
-          >
-            Add Category
-          </button>
+      <div className="w-full flex text-center" style={{ height: "10%" }}>
+        <div
+          onClick={handleSubmit}
+          className="w-full"
+          style={{
+            borderTop: `3px solid ${props.foreground}`,
+            fontSize: `${props.textSize * 0.1}rem`,
+            borderRight: `3px solid ${props.foreground}`,
+          }}
+        >
+          <p>Register Song</p>
+        </div>{" "}
+        <div
+          className="w-full"
+          style={{
+            fontSize: `${props.textSize * 0.1}rem`,
+            borderTop: `3px solid ${props.foreground}`,
+          }}
+        >
+          <p>Register Category</p>
         </div>
       </div>
     </div>
