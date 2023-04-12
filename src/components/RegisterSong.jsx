@@ -3,6 +3,8 @@ import RegisterInput from "./RegisterInput";
 
 const RegisterSong = (props) => {
   const [colorMode, setColorMode] = React.useState(true);
+  const [catMode, setCatMode] = React.useState(false);
+  const [catValue, setCatValue] = React.useState("");
   const [value, setValue] = React.useState({
     name: "",
     type: "",
@@ -102,119 +104,169 @@ const RegisterSong = (props) => {
     audioPlayer.play();
   };
 
+  const addCategory = () => {
+    setCatMode(!catMode);
+  };
+
+  React.useEffect(() => {
+    console.log(catValue);
+  }, [catValue]);
+
   return (
-    <div
-      className="register h-3/5 w-1/5 absolute flex flex-col"
-      style={{ border: `3px solid ${props.foreground}` }}
-    >
-      <div
-        className="text-center w-full"
-        style={{ height: "10%", borderBottom: `3px solid ${props.foreground}` }}
-      >
-        <p
-          className="w-5/6 m-auto"
-          style={{ fontSize: `${props.textSize * 0.1}rem` }}
+    <>
+      {catMode ? (
+        <div
+          className="absolute w-1/5 h-1/6 border-2 border-red-200"
+          style={{
+            left: "8%",
+            top: "2%",
+            border: `3px solid ${props.foreground}`,
+          }}
         >
-          Check Guide in the Description to add Custom Music!
-        </p>
-      </div>
-      <div
-        className="flex flex-col m-auto"
-        style={{ height: "80%", width: "90%" }}
-      >
-        <div className="flex flex-col justify-evenly h-2/3">
-          {check.slice(0, 4).map((e) => (
-            <RegisterInput
-              textSize={props.textSize}
-              color={props.foreground}
-              key={e.id}
-              {...e}
-              value={value[e.name]}
-              onChange={onChange}
-            />
-          ))}
-        </div>
-        <div className="flex " style={{ height: "30%" }}>
-          <div className="flex flex-col justify-evenly w-5/6">
-            {colorMode ? (
-              <div className="w-full flex flex-col">
-                {check.slice(4, 7).map((e) => (
-                  <RegisterInput
-                    textSize={props.textSize}
-                    color={props.foreground}
-                    key={e.id}
-                    {...e}
-                    value={value[e.name]}
-                    onChange={onChange}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div
-                className="w-full flex flex-col border-2 border-red-200 h-full"
-                onChange={onPresetColor}
-              >
-                {presetColors.map((e) => (
-                  <div className="h-full w-full">
-                    <label
-                      className="font-medium"
-                      style={{
-                        fontSize: `${props.textSize * 0.1}rem`,
-                        textShadow: `1px 1px 2px ${props.foreground}`,
-                      }}
-                    >
-                      <input
-                        type="radio"
-                        value={JSON.stringify([e.foreground, e.background])}
-                        name="presetColor"
-                      />
-                      {" " + e.name}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="w-full h-full m-auto text-center flex flex-col">
+            <p
+              className="h-full"
+              style={{
+                fontSize: `${props.textSize * 0.12}rem`,
+                padding: `${props.textSize * 1}px`,
+              }}
+            >
+              HATKDOG
+            </p>
+            <div className="h-full w-5/6 m-auto">
+              <input
+                style={{
+                  border: `2px solid ${props.foreground}`,
+                  fontSize: `${props.textSize * 0.095}rem`,
+                }}
+                type="text"
+                onChange={(e) => setCatValue(e.target.value)}
+              />
+            </div>
+            <button
+              style={{ borderTop: `3px solid ${props.foreground}` }}
+              className="h-full"
+            >
+              Add Category
+            </button>
           </div>
-          <div
-            className="h-1/3 w-1/6 text-center relative font-medium"
-            style={{
-              outline: "none",
-              border: `2px solid ${props.foreground}`,
-              fontSize: `${props.textSize * 0.08}rem`,
-              textShadow: `1px 1px 2px ${props.foreground}`,
-              top: "35%",
-            }}
-            onClick={changeMode}
+        </div>
+      ) : null}
+
+      <div
+        className="register h-3/5 w-1/5 absolute flex flex-col"
+        style={{ border: `3px solid ${props.foreground}` }}
+      >
+        <div
+          className="text-center w-full"
+          style={{
+            height: "10%",
+            borderBottom: `3px solid ${props.foreground}`,
+          }}
+        >
+          <p
+            className="w-5/6 m-auto"
+            style={{ fontSize: `${props.textSize * 0.1}rem` }}
           >
-            <p>{colorMode ? "Custom" : "Preset"}</p>
+            Check Guide in the Description to add Custom Music!
+          </p>
+        </div>
+        <div
+          className="flex flex-col m-auto"
+          style={{ height: "80%", width: "90%" }}
+        >
+          <div className="flex flex-col justify-evenly h-2/3">
+            {check.slice(0, 4).map((e) => (
+              <RegisterInput
+                textSize={props.textSize}
+                color={props.foreground}
+                key={e.id}
+                {...e}
+                value={value[e.name]}
+                onChange={onChange}
+              />
+            ))}
+          </div>
+          <div className="flex " style={{ height: "30%" }}>
+            <div className="flex flex-col justify-evenly w-5/6">
+              {colorMode ? (
+                <div className="w-full flex flex-col">
+                  {check.slice(4, 7).map((e) => (
+                    <RegisterInput
+                      textSize={props.textSize}
+                      color={props.foreground}
+                      key={e.id}
+                      {...e}
+                      value={value[e.name]}
+                      onChange={onChange}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div
+                  className="w-full flex flex-col h-full"
+                  onChange={onPresetColor}
+                >
+                  {presetColors.map((e) => (
+                    <div className="h-full w-full">
+                      <label
+                        className="font-medium"
+                        style={{
+                          fontSize: `${props.textSize * 0.1}rem`,
+                          textShadow: `1px 1px 2px ${props.foreground}`,
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          value={JSON.stringify([e.foreground, e.background])}
+                          name="presetColor"
+                        />
+                        {" " + e.name}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              className="h-1/3 w-1/6 text-center relative font-medium"
+              style={{
+                outline: "none",
+                border: `2px solid ${props.foreground}`,
+                fontSize: `${props.textSize * 0.08}rem`,
+                textShadow: `1px 1px 2px ${props.foreground}`,
+                top: "35%",
+              }}
+              onClick={changeMode}
+            >
+              <p
+                className="m-auto "
+                style={{ padding: `${props.textSize * 0.5}px` }}
+              >
+                {colorMode ? "Custom" : "Preset"}
+              </p>
+            </button>
+          </div>
+        </div>
+        <div
+          className="w-full flex text-center font-semibold"
+          style={{ height: "10%" }}
+        >
+          <div
+            onClick={handleSubmit}
+            className="w-full"
+            style={{
+              borderTop: `3px solid ${props.foreground}`,
+              fontSize: `${props.textSize * 0.115}rem`,
+              borderRight: `3px solid ${props.foreground}`,
+              padding: `${props.textSize * 1.5}px`,
+            }}
+          >
+            <p>Register Song</p>
           </div>
         </div>
       </div>
-      <div className="w-full flex text-center" style={{ height: "10%" }}>
-        <div
-          onClick={handleSubmit}
-          className="w-full"
-          style={{
-            borderTop: `3px solid ${props.foreground}`,
-            fontSize: `${props.textSize * 0.115}rem`,
-            borderRight: `3px solid ${props.foreground}`,
-            padding: `${props.textSize * 1.5}px`,
-          }}
-        >
-          <p>Register Song</p>
-        </div>
-        <div
-          className="w-full"
-          style={{
-            borderTop: `3px solid ${props.foreground}`,
-            fontSize: `${props.textSize * 0.115}rem`,
-            padding: `${props.textSize * 1.5}px`,
-          }}
-        >
-          <p>Register Category</p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
