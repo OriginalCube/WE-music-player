@@ -196,17 +196,19 @@ const RegisterSong = (props) => {
           className="w-full"
           style={{
             borderTop: `3px solid ${props.foreground}`,
-            fontSize: `${props.textSize * 0.1}rem`,
+            fontSize: `${props.textSize * 0.115}rem`,
             borderRight: `3px solid ${props.foreground}`,
+            padding: `${props.textSize * 1.5}px`,
           }}
         >
           <p>Register Song</p>
-        </div>{" "}
+        </div>
         <div
           className="w-full"
           style={{
-            fontSize: `${props.textSize * 0.1}rem`,
             borderTop: `3px solid ${props.foreground}`,
+            fontSize: `${props.textSize * 0.115}rem`,
+            padding: `${props.textSize * 1.5}px`,
           }}
         >
           <p>Register Category</p>
