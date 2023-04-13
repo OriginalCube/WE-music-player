@@ -203,6 +203,8 @@ const Main = () => {
       ) : null}
       {register ? (
         <RegisterSong
+          setCategory={setCategory}
+          category={category}
           textSize={textSize}
           addSong={addSong}
           bone={bone}

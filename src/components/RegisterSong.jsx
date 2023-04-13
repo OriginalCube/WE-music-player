@@ -3,7 +3,6 @@ import RegisterInput from "./RegisterInput";
 
 const RegisterSong = (props) => {
   const [colorMode, setColorMode] = React.useState(true);
-  const [catMode, setCatMode] = React.useState(false);
   const [catValue, setCatValue] = React.useState("");
   const [value, setValue] = React.useState({
     name: "",
@@ -104,54 +103,56 @@ const RegisterSong = (props) => {
     audioPlayer.play();
   };
 
-  const addCategory = () => {
-    setCatMode(!catMode);
-  };
-
-  React.useEffect(() => {
-    console.log(catValue);
-  }, [catValue]);
-
+  console.log(props.category);
   return (
     <>
-      {catMode ? (
-        <div
-          className="absolute w-1/5 h-1/6 border-2 border-red-200"
-          style={{
-            left: "8%",
-            top: "2%",
-            border: `3px solid ${props.foreground}`,
-          }}
-        >
-          <div className="w-full h-full m-auto text-center flex flex-col">
-            <p
-              className="h-full"
+      <div
+        className="absolute w-1/5 h-1/6 border-2 border-red-200"
+        style={{
+          left: "8%",
+          top: "2%",
+          border: `3px solid ${props.foreground}`,
+        }}
+      >
+        <div className="w-full h-full m-auto text-center flex flex-col">
+          <p
+            className="h-full"
+            style={{
+              fontSize: `${props.textSize * 0.12}rem`,
+              padding: `${props.textSize * 1}px`,
+            }}
+          >
+            Category Options
+          </p>
+          <div className="h-full w-5/6 m-auto">
+            <input
               style={{
-                fontSize: `${props.textSize * 0.12}rem`,
-                padding: `${props.textSize * 1}px`,
+                border: `2px solid ${props.foreground}`,
+                fontSize: `${props.textSize * 0.095}rem`,
               }}
-            >
-              HATKDOG
-            </p>
-            <div className="h-full w-5/6 m-auto">
-              <input
-                style={{
-                  border: `2px solid ${props.foreground}`,
-                  fontSize: `${props.textSize * 0.095}rem`,
-                }}
-                type="text"
-                onChange={(e) => setCatValue(e.target.value)}
-              />
-            </div>
+              type="text"
+              onChange={(e) => setCatValue(e.target.value)}
+            />
+          </div>
+          <div className="flex h-full w-full">
             <button
-              style={{ borderTop: `3px solid ${props.foreground}` }}
-              className="h-full"
+              style={{
+                borderTop: `3px solid ${props.foreground}`,
+                borderRight: `3px solid ${props.foreground}`,
+              }}
+              className="h-full w-full"
             >
               Add Category
             </button>
+            <button
+              style={{ borderTop: `3px solid ${props.foreground}` }}
+              className="h-full w-full"
+            >
+              Remove Category
+            </button>{" "}
           </div>
         </div>
-      ) : null}
+      </div>
 
       <div
         className="register h-3/5 w-1/5 absolute flex flex-col"
