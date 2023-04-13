@@ -4,6 +4,7 @@ import RegisterInput from "./RegisterInput";
 const RegisterSong = (props) => {
   const [colorMode, setColorMode] = React.useState(true);
   const [catValue, setCatValue] = React.useState("");
+  const [errMessage, setErrMessage] = React.useState("");
   const [value, setValue] = React.useState({
     name: "",
     type: "",
@@ -103,7 +104,35 @@ const RegisterSong = (props) => {
     audioPlayer.play();
   };
 
-  console.log(props.category);
+  const addCategory = () => {
+    if (catValue.length > 0) {
+      if (props.category.some((e) => e === catValue) === false) {
+        props.category.push(catValue);
+        props.setCategory([...props.category]);
+        props.updateCategory();
+      } else {
+        setErrMessage("The category name already extists!");
+      }
+    } else {
+      setErrMessage("Textbox must not be empty!");
+    }
+  };
+
+  const removeCategory = () => {
+    if (catValue.length > 0) {
+      const catId = props.category.findIndex((res) => res === catValue);
+      if (catId !== -1) {
+        props.category.splice(catId, 1);
+        props.setCategory([...props.category]);
+        props.updateCategory();
+      } else {
+        setErrMessage("The category name does not exist!");
+      }
+    } else {
+      setErrMessage("Textbox must not be empty!");
+    }
+  };
+
   return (
     <>
       <div
@@ -123,6 +152,13 @@ const RegisterSong = (props) => {
             }}
           >
             Category Options
+            <br />
+            <span
+              style={{ fontSize: `${props.textSize * 0.08}rem` }}
+              className="text-red-500"
+            >
+              {errMessage}
+            </span>
           </p>
           <div className="h-full w-5/6 m-auto">
             <input
@@ -136,6 +172,7 @@ const RegisterSong = (props) => {
           </div>
           <div className="flex h-full w-full">
             <button
+              onClick={addCategory}
               style={{
                 borderTop: `3px solid ${props.foreground}`,
                 borderRight: `3px solid ${props.foreground}`,
@@ -145,6 +182,7 @@ const RegisterSong = (props) => {
               Add Category
             </button>
             <button
+              onClick={removeCategory}
               style={{ borderTop: `3px solid ${props.foreground}` }}
               className="h-full w-full"
             >
@@ -259,7 +297,6 @@ const RegisterSong = (props) => {
             style={{
               borderTop: `3px solid ${props.foreground}`,
               fontSize: `${props.textSize * 0.115}rem`,
-              borderRight: `3px solid ${props.foreground}`,
               padding: `${props.textSize * 1.5}px`,
             }}
           >

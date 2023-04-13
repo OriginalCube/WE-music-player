@@ -116,6 +116,8 @@ const Main = () => {
     setSongList([...songList]);
   };
 
+  const updateCategory = (x, y, m) => {};
+
   const removeSong = () => {
     songList.splice(mainIndex, 1);
     setSongList([...songList]);
