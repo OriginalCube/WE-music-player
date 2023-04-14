@@ -116,7 +116,31 @@ const Main = () => {
     setSongList([...songList]);
   };
 
-  const updateCategory = (x, y, m) => {};
+  const updateCategory = (x, m) => {
+    if (m === "add") {
+      const categoryChecker = category.some((res) => res === x);
+      if (!categoryChecker) {
+        category.push(x);
+        setCategory([...category]);
+        bone["category"] = category;
+        localStorage.setItem("music-player-03", JSON.stringify(bone));
+        return "Added successfully.";
+      } else {
+        return "The category name already exists!";
+      }
+    } else if (m === "remove") {
+      const categoryChecker = category.findIndex((res) => res === x);
+      if (categoryChecker !== -1) {
+        category.splice(categoryChecker, 1);
+        setCategory([...category]);
+        bone["category"] = category;
+        localStorage.setItem("music-player-03", JSON.stringify(bone));
+        return "Removed successfully.";
+      } else {
+        return "The category name does not exist!";
+      }
+    }
+  };
 
   const removeSong = () => {
     songList.splice(mainIndex, 1);
@@ -205,8 +229,7 @@ const Main = () => {
       ) : null}
       {register ? (
         <RegisterSong
-          setCategory={setCategory}
-          category={category}
+          updateCategory={updateCategory}
           textSize={textSize}
           addSong={addSong}
           bone={bone}

@@ -20,11 +20,24 @@ const Playlist = (props) => {
   };
 
   const onPages = (e) => {
-    if (playlistPages + e >= 0 && playlistPages + e < props.bone.length / 5) {
-      setPlaylistPages(playlistPages + e);
+    if (id === 0) {
+      if (playlistPages + e >= 0 && playlistPages + e < props.bone.length / 5) {
+        setPlaylistPages(playlistPages + e);
+      } else {
+        setPlaylistPages(0);
+      }
     } else {
-      setPlaylistPages(0);
+      const len = props.bone.filter(
+        (e) => e.category === props.category[id - 1]
+      ).length;
+
+      if (playlistPages + e >= 0 && playlistPages + e < len / 5) {
+        setPlaylistPages(playlistPages + e);
+      } else {
+        setPlaylistPages(0);
+      }
     }
+
     audioBite(1);
   };
 
@@ -34,6 +47,7 @@ const Playlist = (props) => {
     } else {
       setId(0);
     }
+    setPlaylistPages(0);
   };
 
   React.useEffect(() => {

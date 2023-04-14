@@ -106,31 +106,26 @@ const RegisterSong = (props) => {
 
   const addCategory = () => {
     if (catValue.length > 0) {
-      if (props.category.some((e) => e === catValue) === false) {
-        props.category.push(catValue);
-        props.setCategory([...props.category]);
-        props.updateCategory();
-      } else {
-        setErrMessage("The category name already extists!");
-      }
+      const updateCategory = props.updateCategory(catValue, "add");
+      setErrMessage(updateCategory);
     } else {
       setErrMessage("Textbox must not be empty!");
     }
+    const audioPlayer = new Audio("./assets/audios/keypress.mp3");
+    audioPlayer.volume = 0.5;
+    audioPlayer.play();
   };
 
   const removeCategory = () => {
     if (catValue.length > 0) {
-      const catId = props.category.findIndex((res) => res === catValue);
-      if (catId !== -1) {
-        props.category.splice(catId, 1);
-        props.setCategory([...props.category]);
-        props.updateCategory();
-      } else {
-        setErrMessage("The category name does not exist!");
-      }
+      const updateCategory = props.updateCategory(catValue, "remove");
+      setErrMessage(updateCategory);
     } else {
       setErrMessage("Textbox must not be empty!");
     }
+    const audioPlayer = new Audio("./assets/audios/keypress.mp3");
+    audioPlayer.volume = 0.5;
+    audioPlayer.play();
   };
 
   return (
@@ -154,8 +149,14 @@ const RegisterSong = (props) => {
             Category Options
             <br />
             <span
-              style={{ fontSize: `${props.textSize * 0.08}rem` }}
-              className="text-red-500"
+              style={{
+                fontSize: `${props.textSize * 0.08}rem`,
+                color: `${
+                  errMessage[errMessage.length - 1] === "!"
+                    ? "#ef4444"
+                    : "#22c55e"
+                }`,
+              }}
             >
               {errMessage}
             </span>
@@ -287,10 +288,7 @@ const RegisterSong = (props) => {
             </button>
           </div>
         </div>
-        <div
-          className="w-full flex text-center font-semibold"
-          style={{ height: "10%" }}
-        >
+        <div className="w-full flex text-center " style={{ height: "10%" }}>
           <div
             onClick={handleSubmit}
             className="w-full"
@@ -298,6 +296,7 @@ const RegisterSong = (props) => {
               borderTop: `3px solid ${props.foreground}`,
               fontSize: `${props.textSize * 0.115}rem`,
               padding: `${props.textSize * 1.5}px`,
+              textShadow: `1px 1px 2px ${props.foreground}`,
             }}
           >
             <p>Register Song</p>
