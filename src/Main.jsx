@@ -10,6 +10,7 @@ import Playlist from "./components/Playlist";
 
 const Main = () => {
   const [background, setBackground] = React.useState(false);
+  const [id, setId] = React.useState(0);
   const [songList, setSongList] = React.useState();
   const [bone, setBone] = React.useState();
   const [textSize, setTextSize] = React.useState(10);
@@ -62,19 +63,52 @@ const Main = () => {
     localStorage.setItem("music-player-03", JSON.stringify(bone));
   };
 
+  const onIdChange = () => {
+    const findItems = songList.filter((e) => e.category === category[id - 1]);
+    const randomGen = Math.floor(findItems.length * Math.random());
+    const findItem = songList.findIndex(
+      (e) => e.name === findItems[randomGen].name
+    );
+    setMainIndex(findItem);
+  };
+
+  const onId = (e) => {
+    setId(e);
+  };
+
+  React.useEffect(() => {
+    if (id > 0) {
+      onIdChange();
+    }
+  }, [id]);
+
   const onSkip = () => {
     if (shuffle) {
       if (songList) {
-        setMainIndex(Math.floor(songList.length * Math.random()));
+        if (id === 0) {
+          setMainIndex(Math.floor(songList.length * Math.random()));
+        } else {
+          onIdChange(); //randomized change
+        }
       } else {
         setMainIndex(Math.floor(MainData["songs"].length * Math.random()));
       }
     } else {
       if (songList) {
-        if (mainIndex + 1 < songList.length) {
-          setMainIndex(mainIndex + 1);
+        if (id === 0) {
+          if (mainIndex + 1 < songList.length) {
+            setMainIndex(mainIndex + 1);
+          } else {
+            setMainIndex(0);
+          }
         } else {
-          setMainIndex(0);
+          const findItems = songList.filter(
+            (e) => e.category === category[id - 1]
+          );
+          //break dont want to add another state tho
+          if (mainIndex > findItems) {
+            //wait
+          }
         }
       } else {
         if (mainIndex + 1 < MainData["songs"].length) {
@@ -195,6 +229,10 @@ const Main = () => {
     }
   }, []);
 
+  React.useEffect(() => {
+    console.log(id);
+  }, [id]);
+
   return (
     <div
       className="Main"
@@ -250,6 +288,7 @@ const Main = () => {
       />
       {playlist ? (
         <Playlist
+          onId={onId}
           mainIndex={mainIndex}
           textSize={textSize}
           removeSong={removeSong}
