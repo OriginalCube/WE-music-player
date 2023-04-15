@@ -249,11 +249,6 @@ const RegisterSong = (props) => {
                 >
                   {presetColors.map((e) => (
                     <div className="radio-button h-full w-full">
-                      <input
-                        type="radio"
-                        value={JSON.stringify([e.foreground, e.background])}
-                        name="presetColor"
-                      />
                       <label
                         className="font-medium"
                         style={{
@@ -261,6 +256,12 @@ const RegisterSong = (props) => {
                           textShadow: `1px 1px 2px ${props.foreground}`,
                         }}
                       >
+                        <input
+                          type="radio"
+                          value={JSON.stringify([e.foreground, e.background])}
+                          name="presetColor"
+                        />
+
                         {" " + e.name}
                       </label>
                     </div>
@@ -271,11 +272,11 @@ const RegisterSong = (props) => {
             <button
               className="h-1/3 w-1/6 text-center relative font-medium"
               style={{
+                top: "44%",
                 outline: "none",
                 border: `2px solid ${props.foreground}`,
                 fontSize: `${props.textSize * 0.08}rem`,
                 textShadow: `1px 1px 2px ${props.foreground}`,
-                top: "35%",
               }}
               onClick={changeMode}
             >
