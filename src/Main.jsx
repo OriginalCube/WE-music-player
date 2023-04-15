@@ -10,6 +10,7 @@ import Playlist from "./components/Playlist";
 
 const Main = () => {
   const [background, setBackground] = React.useState(false);
+  const [categoryId, setCategoryId] = React.useState(0);
   const [id, setId] = React.useState(0);
   const [songList, setSongList] = React.useState();
   const [bone, setBone] = React.useState();
@@ -69,7 +70,10 @@ const Main = () => {
     const findItem = songList.findIndex(
       (e) => e.name === findItems[randomGen].name
     );
+    setCategoryId(randomGen);
     setMainIndex(findItem);
+    console.log(findItems);
+    console.log(randomGen);
   };
 
   const onId = (e) => {
@@ -105,10 +109,16 @@ const Main = () => {
           const findItems = songList.filter(
             (e) => e.category === category[id - 1]
           );
-          //break dont want to add another state tho
-          if (mainIndex > findItems) {
-            //wait
+          const catId = categoryId + 1;
+          let key;
+          if (catId < findItems.length) {
+            setCategoryId(catId);
+            key = songList.findIndex((e) => e.name === findItems[catId].name);
+          } else {
+            key = songList.findIndex((e) => e.name === findItems[0].name);
+            setCategoryId(0);
           }
+          setMainIndex(key);
         }
       } else {
         if (mainIndex + 1 < MainData["songs"].length) {
@@ -121,15 +131,49 @@ const Main = () => {
   };
 
   const onPrev = () => {
-    if (mainIndex - 1 >= 0) {
-      setMainIndex(mainIndex - 1);
+    if (songList) {
+      if (id === 0) {
+        if (mainIndex - 1 >= 0) {
+          setMainIndex(mainIndex - 1);
+        } else {
+          setMainIndex(songList.length - 1);
+        }
+      } else {
+        const findItems = songList.filter(
+          (e) => e.category === category[id - 1]
+        );
+        const catId = categoryId - 1;
+        let key;
+        if (catId >= 0) {
+          setCategoryId(catId);
+          key = songList.findIndex((e) => e.name === findItems[catId].name);
+        } else {
+          key = songList.findIndex(
+            (e) => e.name === findItems[findItems.length - 1].name
+          );
+          setCategoryId(findItems.length - 1);
+        }
+        setMainIndex(key);
+      }
     } else {
-      setMainIndex(bone["songs"].length - 1);
+      if (mainIndex - 1 >= 0) {
+        setMainIndex(mainIndex - 1);
+      } else {
+        setMainIndex(MainData["songs"].length - 1);
+      }
     }
   };
 
   const changeSong = (e) => {
-    const musicId = songList.findIndex((bones) => bones.name === e);
+    let musicId;
+    musicId = songList.findIndex((bones) => bones.name === e);
+    if (id !== 0) {
+      const findItems = songList.filter((e) => e.category === category[id - 1]);
+      const catId = findItems.findIndex(
+        (e) => e.name === songList[musicId].name
+      );
+      setCategoryId(catId);
+    }
     setMainIndex(musicId);
   };
 
