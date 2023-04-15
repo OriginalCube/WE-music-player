@@ -134,7 +134,7 @@ const RegisterSong = (props) => {
         className="absolute w-1/5 h-1/6 border-2 border-red-200"
         style={{
           left: "8%",
-          top: "2%",
+          top: "10%",
           border: `3px solid ${props.foreground}`,
         }}
       >
