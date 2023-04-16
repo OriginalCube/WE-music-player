@@ -72,8 +72,6 @@ const Main = () => {
     );
     setCategoryId(randomGen);
     setMainIndex(findItem);
-    console.log(findItems);
-    console.log(randomGen);
   };
 
   const onId = (e) => {
@@ -198,11 +196,17 @@ const Main = () => {
     if (m === "add") {
       const categoryChecker = category.some((res) => res === x);
       if (!categoryChecker) {
-        category.push(x);
-        setCategory([...category]);
-        bone["category"] = category;
-        localStorage.setItem("music-player-03", JSON.stringify(bone));
-        return "Added successfully.";
+        const doesExist = songList.some((res) => res.category === x);
+        console.log(doesExist);
+        if (doesExist) {
+          category.push(x);
+          setCategory([...category]);
+          bone["category"] = category;
+          localStorage.setItem("music-player-03", JSON.stringify(bone));
+          return "Added successfully.";
+        } else {
+          return "No song has that category name!";
+        }
       } else {
         return "The category name already exists!";
       }

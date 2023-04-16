@@ -47,6 +47,7 @@ const Playlist = (props) => {
       setId(0);
     }
     setPlaylistPages(0);
+    audioBite(0);
   };
 
   React.useEffect(() => {
