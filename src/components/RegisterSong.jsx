@@ -172,23 +172,32 @@ const RegisterSong = (props) => {
             />
           </div>
           <div className="flex h-full w-full">
-            <button
+            <p
               onClick={addCategory}
               style={{
+                cursor: "pointer",
+                padding: `${props.textSize * 1}px`,
                 borderTop: `3px solid ${props.foreground}`,
                 borderRight: `3px solid ${props.foreground}`,
+                textShadow: `1px 1px 2px ${props.foreground}`,
               }}
               className="h-full w-full"
             >
               Add Category
-            </button>
-            <button
+            </p>
+            <p
               onClick={removeCategory}
-              style={{ borderTop: `3px solid ${props.foreground}` }}
+              style={{
+                cursor: "pointer",
+                padding: `${props.textSize * 1}px`,
+                borderTop: `3px solid ${props.foreground}`,
+                textSize: `${props.textSize * 0.12}rem`,
+                textShadow: `1px 1px 2px ${props.foreground}`,
+              }}
               className="h-full w-full"
             >
               Remove Category
-            </button>{" "}
+            </p>
           </div>
         </div>
       </div>
