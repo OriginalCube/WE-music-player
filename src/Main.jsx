@@ -233,16 +233,6 @@ const Main = () => {
   };
 
   //Wallpaper Engine Functions
-  try {
-    window.wallpaperPropertyListener = {
-      applyUserProperties: function (properties) {
-        setTextSize(properties.fontSize.value);
-      },
-    };
-  } catch (e) {
-    console.log(e);
-  }
-
   React.useEffect(() => {
     //set Local Storage
     try {
@@ -318,6 +308,7 @@ const Main = () => {
           updateCategory={updateCategory}
           textSize={textSize}
           addSong={addSong}
+          setTextSize={setTextSize}
           bone={bone}
           mainIndex={mainIndex}
           foreground={

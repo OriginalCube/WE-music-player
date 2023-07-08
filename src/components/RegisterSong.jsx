@@ -128,6 +128,32 @@ const RegisterSong = (props) => {
     audioPlayer.play();
   };
 
+  window.wallpaperPropertyListener = {
+    applyUserProperties: function (properties) {
+      if (properties.fontsize) {
+        props.setTextSize(properties.fontsize.value);
+      }
+      if (properties.name) {
+        setValue({ ...value, name: properties.name.value });
+      }
+      if (properties.type) {
+        setValue({ ...value, type: properties.type.value });
+      }
+      if (properties.imagetype) {
+        setValue({ ...value, imageType: properties.imagetype.value });
+      }
+      if (properties.background) {
+        setValue({ ...value, background: properties.background.value });
+      }
+      if (properties.foreground) {
+        setValue({ ...value, foreground: properties.foreground.value });
+      }
+      if (properties.category) {
+        setValue({ ...value, category: properties.category.value });
+      }
+    },
+  };
+
   return (
     <>
       <div
@@ -172,32 +198,31 @@ const RegisterSong = (props) => {
             />
           </div>
           <div className="flex h-full w-full">
-            <p
+            <button
               onClick={addCategory}
               style={{
                 cursor: "pointer",
-                padding: `${props.textSize * 1}px`,
                 borderTop: `3px solid ${props.foreground}`,
+                fontSize: `${props.textSize * 0.1}rem`,
                 borderRight: `3px solid ${props.foreground}`,
                 textShadow: `1px 1px 2px ${props.foreground}`,
               }}
               className="h-full w-full"
             >
-              Add Category
-            </p>
-            <p
+              <p>Add Category</p>
+            </button>
+            <button
               onClick={removeCategory}
               style={{
                 cursor: "pointer",
-                padding: `${props.textSize * 1}px`,
                 borderTop: `3px solid ${props.foreground}`,
-                textSize: `${props.textSize * 0.12}rem`,
+                fontSize: `${props.textSize * 0.1}rem`,
                 textShadow: `1px 1px 2px ${props.foreground}`,
               }}
               className="h-full w-full"
             >
-              Remove Category
-            </p>
+              <p>Remove Category</p>
+            </button>
           </div>
         </div>
       </div>
