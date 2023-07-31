@@ -5,5 +5,5 @@ This is a Wallpaper Based on my previous work Bocchi the Rock! ぼっち・ざ�
 Currently, I see no need to update this because it works like how I intended it to be. I could update the sizing of the components because these were built without maximizing the utilities that Flex has to offer. I would probably create a newer version of this where users will have an easier time uploading their own custom music and share it across the steam workshop.
 
 ### Built with
-React JS front-end  
+React JS front-end  <br />
 Tailwind css for design
