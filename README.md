@@ -3,6 +3,9 @@ This is a Wallpaper Based on my previous work Bocchi the Rock! ぼっち・ざ�
 
 <img src="https://i.imgur.com/85x6Fp5.png" />
 
+##  Steamworkshop Link
+[Wallpaper Music! ♡ Custom Music & Images](https://steamcommunity.com/sharedfiles/filedetails/?id=2951409261)
+
 ## Dev notes
 Currently, I see no need to update this because it works like how I intended it to be. I could update the sizing of the components because these were built without maximizing the utilities that Flex has to offer. I would probably create a newer version of this where users will have an easier time uploading their own custom music and share it across the steam workshop.
 
