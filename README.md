@@ -1,7 +1,11 @@
 # Wallpaper Engine Music Player
 This is a Wallpaper Based on my previous work Bocchi the Rock! ぼっち・ざ・ろっく！(Album)! This is a customizable version of it and allows users to add their custom music and images to this wallpaper. Every entry that you save for your custom image and music will be saved locally (local storage).
 
+##  Customized Song
 <img src="https://i.imgur.com/85x6Fp5.png" />
+
+##  Customized Song & Color
+<img src="https://i.imgur.com/GpxKebj.png" />
 
 ##  Steamworkshop Link
 [Wallpaper Music! ♡ Custom Music & Images](https://steamcommunity.com/sharedfiles/filedetails/?id=2951409261)
